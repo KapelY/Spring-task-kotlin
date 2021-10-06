@@ -28,7 +28,7 @@ private val logger = KotlinLogging.logger {}
         crudService.addAndReturn(serviceStorage)
 
     @GetMapping(path = [GET_STORAGE_SIZE])
-    fun getAmount(): Int = crudService.getAmount()
+    fun getAmount(): Int = crudService.getSize()
 
     companion object {
         const val CANNOT_BE_EMPTY = "array cannot be empty"

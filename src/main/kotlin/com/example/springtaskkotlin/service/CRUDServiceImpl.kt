@@ -10,7 +10,7 @@ interface CRUDService {
 
     fun getAll(): List<String>
 
-    fun getAmount(): Int
+    fun getSize(): Int
 
     fun addAndReturn(serviceStorage: ServiceStorage): ServiceStorage
 }
@@ -29,20 +29,16 @@ class CRUDServiceImpl : CRUDService {
         return stringRepository.getAll()
     }
 
-    override fun getAmount(): Int {
+    override fun getSize(): Int {
         return stringRepository.size()
     }
 
     override fun addAndReturn(serviceStorage: ServiceStorage): ServiceStorage {
-        println(serviceStorage)
-        return serviceStorage.apply {
-            println(array)
-            this.array = getAll() as MutableList<String>
-            array.addAll(serviceStorage.array)
-            println(array)
-        }
+        val tempStorage = ServiceStorage(getAll())
+        tempStorage.array += serviceStorage.array
+        return tempStorage
     }
 
-    data class ServiceStorage(var array: MutableList<String> = mutableListOf()) {}
+    data class ServiceStorage(var array: List<String> = listOf()) {}
 }
 
