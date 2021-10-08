@@ -13,6 +13,8 @@ import com.example.springtaskkotlin.service.CRUDServiceImpl.ServiceStorage
 import com.sun.tools.javac.util.List
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -38,11 +40,11 @@ internal class StringControllerTestIT {
     companion object {
         private val STORAGE_DEFAULT = List.of("Antony", "Joshua", "Winner", "Champion")
         private const val PARAM_STRING = "{\"array\":[\"Antony\",\"Joshua\",\"Winner\",\"Champion\"]}"
-        private const  val BAD_PARAM_STRING = "\"array\":[\"A\",\"J\"]"
-        private const  val BAD_PARAM_STRING2 = "{\"array\": \"A\"}"
-        private const  val PARAM_STRING3 = "{\"array\":[\"Antony\"]}"
-        private const  val PARAM_EXPECTED3 = "{\"array\":[\"Antony\",\"Joshua\",\"Winner\",\"Champion\",\"Antony\"]}"
-        private const  val BAD_PARAM_STRING4 = "{\"array\": []}"
+        private const val BAD_PARAM_STRING = "\"array\":[\"A\",\"J\"]"
+        private const val BAD_PARAM_STRING2 = "{\"array\": \"A\"}"
+        private const val PARAM_STRING3 = "{\"array\":[\"Antony\"]}"
+        private const val PARAM_EXPECTED3 = "{\"array\":[\"Antony\",\"Joshua\",\"Winner\",\"Champion\",\"Antony\"]}"
+        private const val BAD_PARAM_STRING4 = "{\"array\": []}"
     }
 
     @Autowired
@@ -65,9 +67,7 @@ internal class StringControllerTestIT {
 
     @Test
     @DisplayName("When call PUT_STORAGE then storage must have correct size & content")
-    @Throws(
-        Exception::class
-    )
+    @Throws(Exception::class)
     fun whenDataAppendOK() {
         crudService.getSize().let { assertThat(it == 0).isTrue }
         mvc.perform(
@@ -77,15 +77,13 @@ internal class StringControllerTestIT {
         )
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andExpect(MockMvcResultMatchers.status().is2xxSuccessful)
-        assertThat(crudService.getSize().equals(4)).isTrue
-        assertThat(crudService.getAll()).isEqualTo(STORAGE_DEFAULT)
+        assertTrue(crudService.getSize() == 4)
+        assertTrue(crudService.getAll() == STORAGE_DEFAULT)
     }
 
     @Test
     @DisplayName("When call PUT_STORAGE fails then storage must contain empty List<String>")
-    @Throws(
-        java.lang.Exception::class
-    )
+    @Throws(java.lang.Exception::class)
     fun whenDataAppendFail() {
         mvc.perform(
             put(PUT_STORAGE)
@@ -94,8 +92,8 @@ internal class StringControllerTestIT {
         )
             .andExpect(MockMvcResultMatchers.status().isBadRequest)
             .andExpect(MockMvcResultMatchers.status().is4xxClientError)
-        assertThat(crudService.getSize() == 0).isTrue
-        assertThat(crudService.getAll()).isEqualTo(listOf<String>())
+        assertTrue(crudService.getSize() == 0)
+        assertThat(crudService.getAll()).isEmpty()
     }
 
     @Test
@@ -119,7 +117,7 @@ internal class StringControllerTestIT {
     @Throws(java.lang.Exception::class)
     fun whenDataAddOk() {
         crudService.addAll(setUpDefault())
-        assertThat(crudService.getSize() == 4).isTrue
+        assertTrue(crudService.getSize() == 4)
         mvc.perform(
             post(ADD_RETURN_STORAGE)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -129,15 +127,13 @@ internal class StringControllerTestIT {
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andExpect(MockMvcResultMatchers.status().is2xxSuccessful)
             .andExpect(MockMvcResultMatchers.content().json(PARAM_EXPECTED3))
-        assertThat(crudService.getSize() == 4).isTrue
-        assertThat(crudService.getAll()).isEqualTo(STORAGE_DEFAULT)
+        assertTrue(crudService.getSize() == 4)
+        assertTrue(crudService.getAll() == STORAGE_DEFAULT)
     }
 
     @Test
     @DisplayName("When call ADD_RETURN_STORAGE fails then storage must contain empty List<String>")
-    @Throws(
-        java.lang.Exception::class
-    )
+    @Throws(java.lang.Exception::class)
     fun whenDataAddFails() {
         mvc.perform(
             post(ADD_RETURN_STORAGE)
@@ -146,15 +142,13 @@ internal class StringControllerTestIT {
         )
             .andExpect(MockMvcResultMatchers.status().isBadRequest)
             .andExpect(MockMvcResultMatchers.status().is4xxClientError)
-        assertThat(crudService.getSize() == 0).isTrue
-        assertThat(crudService.getAll()).isEqualTo(listOf<String>())
+        assertTrue(crudService.getSize() == 0)
+        assertThat(crudService.getAll()).isEmpty()
     }
 
     @Test
     @DisplayName("When call GET_STORAGE_SIZE then return correct array size of 4")
-    @Throws(
-        java.lang.Exception::class
-    )
+    @Throws(java.lang.Exception::class)
     fun getAmountOfStrings() {
         crudService.addAll(setUpDefault())
         val result = mvc.perform(get(GET_STORAGE_SIZE))
@@ -163,7 +157,7 @@ internal class StringControllerTestIT {
             .andExpect(MockMvcResultMatchers.status().is2xxSuccessful)
             .andExpect(MockMvcResultMatchers.content().string("4"))
             .andReturn()
-        org.junit.jupiter.api.Assertions.assertEquals(result.response.contentAsString, "4")
+        assertEquals(result.response.contentAsString, "4")
     }
 
     private fun setUpDefault(): ServiceStorage {
