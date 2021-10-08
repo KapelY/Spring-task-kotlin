@@ -41,6 +41,7 @@ class StringRepositoryImpl : StringRepository {
     }
 
 }
+
 operator fun Queue<String>.plusAssign(serviceStorage: ServiceStorage) {
     this.addAll(serviceStorage.array)
 }

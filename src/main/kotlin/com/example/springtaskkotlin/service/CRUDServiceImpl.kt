@@ -16,11 +16,11 @@ interface CRUDService {
 }
 
 @Service
-class CRUDServiceImpl : CRUDService {
+class CRUDServiceImpl(@Autowired private val stringRepository: StringRepository) : CRUDService {
 
-    @Autowired
-    private lateinit var stringRepository: StringRepository
-
+//    @Autowired
+//    private lateinit var stringRepository: StringRepository
+//
     override fun addAll(storage: ServiceStorage) {
         stringRepository.addAll(storage)
     }
