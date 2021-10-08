@@ -9,7 +9,7 @@ import com.example.springtaskkotlin.repository.StringRepository
 import com.example.springtaskkotlin.repository.StringRepositoryImpl
 import com.example.springtaskkotlin.service.CRUDService
 import com.example.springtaskkotlin.service.CRUDServiceImpl
-import com.example.springtaskkotlin.service.CRUDServiceImpl.*
+import com.example.springtaskkotlin.service.CRUDServiceImpl.ServiceStorage
 import com.sun.tools.javac.util.List
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
@@ -26,7 +26,6 @@ import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers

@@ -39,7 +39,6 @@ class StringRepositoryImpl : StringRepository {
     override fun clear() {
         storage.clear()
     }
-
 }
 
 operator fun Queue<String>.plusAssign(serviceStorage: ServiceStorage) {
