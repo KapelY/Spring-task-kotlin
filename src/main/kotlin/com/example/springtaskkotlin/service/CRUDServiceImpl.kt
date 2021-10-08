@@ -31,11 +31,9 @@ class CRUDServiceImpl(@Autowired private val stringRepository: StringRepository)
     }
 
     override fun addAndReturn(serviceStorage: ServiceStorage): ServiceStorage {
-        val tempStorage = ServiceStorage(getAll())
-        tempStorage.array += serviceStorage.array
-        return tempStorage
+        return ServiceStorage(getAll() + serviceStorage.array)
     }
 
-    data class ServiceStorage(var array: List<String> = listOf()) {}
+    data class ServiceStorage(val array: List<String> = mutableListOf()) {}
 }
 

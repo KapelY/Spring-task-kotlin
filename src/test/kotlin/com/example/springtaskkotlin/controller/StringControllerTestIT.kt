@@ -160,11 +160,7 @@ internal class StringControllerTestIT {
         assertEquals(result.response.contentAsString, "4")
     }
 
-    private fun setUpDefault(): ServiceStorage {
-        val storage = ServiceStorage()
-        storage.array = STORAGE_DEFAULT
-        return storage
-    }
+    private fun setUpDefault(): ServiceStorage = ServiceStorage(STORAGE_DEFAULT)
 
     @Configuration
     class TestConfig {
